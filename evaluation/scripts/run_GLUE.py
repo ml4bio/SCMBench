@@ -17,12 +17,12 @@ import numpy as np
 import pandas as pd
 import scanpy as sc
 import yaml
+import sklearn.impute
 
 import SCMBench
 from SCMBench.utils import AUTO
 
 SCMBench.log.console_log_level = logging.DEBUG
-
 
 def parse_args() -> argparse.Namespace:
     r"""
