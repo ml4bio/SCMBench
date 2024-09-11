@@ -19,6 +19,7 @@ import torch
 
 sys.path.append("/ailab/user/liuxinyuan/projects/scmbench")
 sys.path.append("/ailab/user/liuxinyuan/projects/scmbench/scJoint")
+
 from scJoint.config import Config
 from scJoint.process_db import label_parsing
 from scJoint.trainingprocess_stage1 import TrainingProcessStage1
@@ -95,10 +96,7 @@ def main(args: argparse.Namespace) -> None:
 
     rna = anndata.read_h5ad(args.input_rna)
     atac = anndata.read_h5ad(args.input_atac)
-    # atac = pd.read_csv(args.input_atac, index_col=0, float_precision='round_trip') # gene activity matrix
-    # atac_obs = anndata.read_h5ad(str(args.input_atac).replace('ATAC_GAM.csv', 'RNA.h5ad')).obs
-    # atac = anndata.AnnData(X=scipy.sparse.csr_matrix(atac.values), obs=atac_obs, var=pd.DataFrame(index=atac.columns), 
-    #                        dtype=scipy.sparse.csr_matrix(atac.values).dtype)
+
 
     # process to scJoint required format
     common_genes = rna.var_names.intersection(atac.var_names)
