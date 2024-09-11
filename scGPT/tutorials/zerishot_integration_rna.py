@@ -19,15 +19,16 @@ plt.style.context('default')
 warnings.simplefilter("ignore", ResourceWarning)
 
 # model_dir = Path("../save/scGPT_bc")
-model_dir = Path("../save/scGPT_human")
+model_dir = Path("/ailab/user/liuxinyuan/projects/foundation_models/scGPT/blood")
 
 # dataset_dir_name='10x-Multiome-Pbmc10k-small'
 # ls=['Muto-2021-batch-1-small','Muto-2021-batch-2-small','Muto-2021-batch-3-small','Muto-2021-batch-4-small','Muto-2021-batch-5-small','Muto-2021-sampled-small','Muto-2021-small']
-# ls=['10x-Multiome-Pbmc10k-small']
-ls=['Yao-2021-small']
+# ls=['Chen-2019-small']
+# ls=['Yao-2021-small']
+ls = ['10x-Multiome-Pbmc10k-small']
 for dataset_dir_name in ls:
     print('starts ',dataset_dir_name)
-    smaple_data_path='/mnt/nas/user/yixuan/Multiomics-benchmark-main/data/download/'+dataset_dir_name+'/'+dataset_dir_name+'-RNA.h5ad'
+    smaple_data_path='/ailab/user/liuxinyuan/projects/scmbench/datasets/'+dataset_dir_name+'/'+dataset_dir_name+'-RNA.h5ad'
 
     # smaple_data_path = '../data/Kim2020_Lung.h5ad'
     adata = sc.read_h5ad(smaple_data_path)
@@ -65,4 +66,4 @@ for dataset_dir_name in ls:
     # attach the cell embedding to the original adata
     # assert 1<0,'break'
     emb=pd.DataFrame(embed_adata.obsm['X_scGPT'],index=adata.obs_names)
-    emb.to_csv('/mnt/nas/user/yixuan/Multiomics-benchmark-main/evaluation/workflow/scripts/scGPT-zero-output/'+dataset_dir_name+'/'+dataset_dir_name+'human-rna.csv',header=False)
+    emb.to_csv('/ailab/user/liuxinyuan/projects/scmbench/evaluation/scGPT-zero-output/'+dataset_dir_name+'/'+dataset_dir_name+'-blood-rna.csv',header=False)

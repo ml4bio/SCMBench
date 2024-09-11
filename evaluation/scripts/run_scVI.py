@@ -23,9 +23,9 @@ from SCMBench.utils import AUTO
 
 import scvi
 from rich import print
-from scib_metrics.benchmark import Benchmarker
+# from scib_metrics.benchmark import Benchmarker
 from scvi.model.utils import mde
-from scvi_colab import install
+# from scvi_colab import install
 
 SCMBench.log.console_log_level = logging.DEBUG
 

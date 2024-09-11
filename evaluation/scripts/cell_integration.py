@@ -1,6 +1,4 @@
-#!/usr/env/bin python
-
-r"""
+"""
 Compute cell integration metrics
 """
 
@@ -12,6 +10,8 @@ import anndata
 import numpy as np
 import pandas as pd
 import yaml
+import sys
+sys.path.append('/ailab/user/liuxinyuan/projects/scmbench/SCMBench/')
 
 from scipy.sparse import issparse
 
@@ -19,7 +19,7 @@ import SCMBench
 import SCMBench.metrics
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args():
     r"""
     Parse command line arguments
     """
@@ -53,7 +53,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main(args: argparse.Namespace) -> None:
+def main(args):
     r"""
     Main function
     """
@@ -68,10 +68,11 @@ def main(args: argparse.Namespace) -> None:
     unis = [np.array(dataset.X) if not issparse(dataset.X) else np.array(dataset.X.todense()) for dataset in datasets]
     print("[2/3] Computing metrics...")
     masks = [np.apply_along_axis(lambda x: ~np.any(np.isnan(x)), 1, latent) for latent in latents]
-    for i, mask in enumerate(masks):
-        rm_pct = 100 * (1 - mask.sum() / mask.size)
-        if rm_pct:
-            print(f"Ignoring {rm_pct:.1f}% cells in dataset {i} due to missing values!")
+    # for i, mask in enumerate(masks):
+    #     rm_pct = 100 * (1 - mask.sum() / mask.size)
+    #     if rm_pct:
+    #         print(f'rm_pct')
+            # print(f"Ignoring {rm_pct:.1f}% cells in dataset {i} due to missing values")
     combined_cell_type = np.concatenate([cell_type[mask] for cell_type, mask in zip(cell_types, masks)])
     combined_domain = np.concatenate([domain[mask] for domain, mask in zip(domains, masks)])
     combined_latent = np.concatenate([latent[mask] for latent, mask in zip(latents, masks)])
@@ -99,9 +100,9 @@ def main(args: argparse.Namespace) -> None:
         if len(datasets) != 2:
             raise RuntimeError("Expect exactly two datasets in paired mode!")
         mask = functools.reduce(np.logical_and, masks)
-        rm_pct = 100 * (1 - mask.sum() / mask.size)
-        if rm_pct:
-            print(f"Ignoring {rm_pct:.1f}% cells in all datasets due to missing values!")
+        # rm_pct = 100 * (1 - mask.sum() / mask.size)
+        # if rm_pct:
+        #     print(f"Ignoring {rm_pct:.1f}% cells in all datasets due to missing values!")
         metrics["foscttm"] = np.concatenate(
             SCMBench.metrics.foscttm(*[latent[mask] for latent in latents])
         ).mean().item()

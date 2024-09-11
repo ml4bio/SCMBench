@@ -17,7 +17,8 @@ import yaml
 import numpy as np
 import torch
 
-sys.path.append("../../../custom")
+sys.path.append("/ailab/user/liuxinyuan/projects/scmbench")
+sys.path.append("/ailab/user/liuxinyuan/projects/scmbench/scJoint")
 from scJoint.config import Config
 from scJoint.process_db import label_parsing
 from scJoint.trainingprocess_stage1 import TrainingProcessStage1
@@ -36,7 +37,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--input-atac", dest="input_atac", type=pathlib.Path, required=True,
-        help="Path to input ATAC dataset in gene activity matrix format (.csv)"
+        help="Path to input ATAC dataset in gene activity matrix format (.h5ad)"
     )
     parser.add_argument(  # no use
         "-s", "--random-seed", dest="random_seed", type=int, default=0,
@@ -93,10 +94,11 @@ def main(args: argparse.Namespace) -> None:
     print("[1/4] Reading data...")
 
     rna = anndata.read_h5ad(args.input_rna)
-    atac = pd.read_csv(args.input_atac, index_col=0, float_precision='round_trip') # gene activity matrix
-    atac_obs = anndata.read_h5ad(str(args.input_atac).replace('ATAC_GAM.csv', 'RNA.h5ad')).obs
-    atac = anndata.AnnData(X=scipy.sparse.csr_matrix(atac.values), obs=atac_obs, var=pd.DataFrame(index=atac.columns), 
-                           dtype=scipy.sparse.csr_matrix(atac.values).dtype)
+    atac = anndata.read_h5ad(args.input_atac)
+    # atac = pd.read_csv(args.input_atac, index_col=0, float_precision='round_trip') # gene activity matrix
+    # atac_obs = anndata.read_h5ad(str(args.input_atac).replace('ATAC_GAM.csv', 'RNA.h5ad')).obs
+    # atac = anndata.AnnData(X=scipy.sparse.csr_matrix(atac.values), obs=atac_obs, var=pd.DataFrame(index=atac.columns), 
+    #                        dtype=scipy.sparse.csr_matrix(atac.values).dtype)
 
     # process to scJoint required format
     common_genes = rna.var_names.intersection(atac.var_names)
@@ -116,6 +118,7 @@ def main(args: argparse.Namespace) -> None:
         exit()
 
     config = Config(args, rna.shape[1], len(common_cell_types))
+    args.output_rna.parent.mkdir(parents=True, exist_ok=True)
 
     rna_sparse = rna.X.tocsr()
     scipy.sparse.save_npz(config.rna_paths[0], rna_sparse)

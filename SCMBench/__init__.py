@@ -14,4 +14,4 @@ except ModuleNotFoundError:
 
 
 name = "SCMBench"
-__version__ = version(name)
+# __version__ = version(name)

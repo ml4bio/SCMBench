@@ -68,7 +68,7 @@ if __name__ == '__main__':
         dataset_name='SCMBench', # Dataset name "BMMC"
         do_train=True, # Flag to indicate whether to do update model parameters during training
         load_model=f"/ailab/user/liuxinyuan/projects/foundation_models/scGPT/{model_type}", # Path to pre-trained model
-        freeze = True, #freeze
+        freeze = False, #freeze
         GEP=True, # Gene expression modelling
         GEPC=True, # Gene expression modelling for cell objective
         CLS=False,
@@ -82,7 +82,7 @@ if __name__ == '__main__':
         use_batch_labels = True,
         use_mod = True,
         per_seq_batch_sample = False,
-        epochs=10, # Default number of epochs for fine-tuning #25
+        epochs=25, # Default number of epochs for fine-tuning #25
         input_layer_key = "X_binned", # Default expression value binning in data pre-processing
         n_bins=51, # Default number of bins for value binning in data pre-processing
         n_hvg = 1200,  # Default number of highly variable genes
