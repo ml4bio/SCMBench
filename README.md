@@ -10,14 +10,11 @@ Some usage details can also be found in their [docs](https://scglue.readthedocs.
 
 ```
 .
-├── SCMBench                  # Main Python package
+├── SCMBench                # Main Python package
 ├── data                    # Data files
 ├── evaluation              # Method evaluation pipelines
-├── experiments             # Experiments and case studies
-├── tests                   # Unit tests for the Python package
-├── docs                    # Documentation files
-├── custom                  # Customized third-party packages
-├── packrat                 # Reproducible R environment via packrat
+├── methods                 # Packages of several tools
+├── run                     # Scripts for running tools
 ├── env.yaml                # Reproducible Python environment via conda
 ├── pyproject.toml          # Python package metadata
 ├── LICENSE
@@ -77,26 +74,49 @@ For newly added downstream tasks, follow the code fashion of `run_[METHOD].py` i
 Note: you can directly import new algorithms via `pip install` if they provide that option. But do remember to record the version and update `env.yaml`.
 
 Current included algorithms:
-- [GLUE](https://www.nature.com/articles/s41587-022-01284-4)
-- [CLUE](https://openreview.net/forum?id=Tfb73TeKnJ-)
+Statistical-Based:
+Paired:
 - [bindSC](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-022-02679-x)
-- [Harmony](https://www.nature.com/articles/s41592-019-0619-0)
-- [Seurat v3](https://www.cell.com/cell/pdf/S0092-8674(19)30559-8.pdf)
+- [MMD_MA](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8496402/)
+- [MOFA](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02015-1)
+- [UnionCom](https://academic.oup.com/bioinformatics/article/36/Supplement_1/i48/5870490)
+Unpaired:
+- [Seurat v5](https://www.nature.com/articles/s41587-023-01767-y)
+- [Seurat V4](https://www.cell.com/cell/fulltext/S0092-8674(21)00583-3)
 - [iNMF](https://www.nature.com/articles/s41587-021-00867-x)
 - [LIGER](https://www.cell.com/cell/pdf/S0092-8674(19)30504-5.pdf)
-- [MMD_MA](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8496402/)
 - [Pamona](https://academic.oup.com/bioinformatics/article/38/1/211/6353029)
-- [UnionCom](https://academic.oup.com/bioinformatics/article/36/Supplement_1/i48/5870490)
+- [scMoMaT](https://www.nature.com/articles/s41467-023-36066-2)
+
+Deep Learning-based:
+Paired:
+- [totalVI](https://www.nature.com/articles/s41592-020-01050-x)
+- [scMDC](https://www.nature.com/articles/s41467-022-35031-9)
+- [DeepMAPS](https://www.nature.com/articles/s41467-023-36559-0)
 - [SIMBA](https://www.nature.com/articles/s41592-023-01899-8)
+Unpaired:
+- [Cobolt](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02556-z)
+- [scVI](https://www.nature.com/articles/s41592-018-0229-2)
+- [scJoint](https://www.nature.com/articles/s41587-021-01161-6)
+- [GLUE](https://www.nature.com/articles/s41587-022-01284-4)
+- [Harmony](https://www.nature.com/articles/s41592-019-0619-0)
+
+Foundation Models:
+- [Geneformer](https://www.nature.com/articles/s41586-023-06139-9)
+- [scFoundation](https://www.nature.com/articles/s41592-024-02305-7)
+- [scGPT](https://www.nature.com/articles/s41592-024-02201-0)
+- [UCE](https://www.biorxiv.org/content/10.1101/2023.11.28.568918v1)
 
 ## Downstream tasks
 
 For newly added downstream tasks, follow the code fashion in [Experiments/](experiments).
 
 Currently included downstream tasks:
-- Cell type
-- Batch effect & detecting over-correction
-- Regulatory inference
+- Multi-Omic Integration Accuracy (MAP, MNI, ASW, ARI)
+- Bio-Conservation: 
+  - Biomarker Detection (JSI)
+  - Trajectory Conservation
+- Batch effect & detecting over-correction (iLISI, kBET, Graph connectivity, Batch-ASW)
 
 ## Solution to potential install issues
 
