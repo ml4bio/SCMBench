@@ -2,7 +2,7 @@
 
 Codes for downstream evaluation tasks, including Multi-Omic Integration Accuracy, Bio-Conservation, and Batch effect & detecting over-correction. We provide the python script for each metrics in `scripts/` and the corresponding example shell script for running in `scripts/shell`.
 
-Input of all evaluation scripts are `RNA_uni.adata`, `ATAC_uni.adata`, `RNA_emb.csv`, `ATAC_emb.csv`. `RNA_uni.adata` and `ATAC_uni.adata` are unimodal representations calculated from [scripts/shell/run_reginf.sh](scripts/shell/run_reginf.sh).
+Except the calculation of JSI that takes into account pairs of methods for bio-conservation, the input of all evaluation scripts are `RNA_uni.adata`, `ATAC_uni.adata`, `RNA_emb.csv`, `ATAC_emb.csv`. `RNA_uni.adata` and `ATAC_uni.adata` are unimodal representations calculated from [scripts/shell/run_reginf.sh](scripts/shell/run_reginf.sh). 
 
 ### Multi-Omic Integration Accuracy
 Run [scripts/cell_integration.py](scripts/shell/run_integration.sh) with shell script [scripts/shell/run_integration.sh](scripts/shell/run_integration.sh) for multi-omic integration evaluation.
