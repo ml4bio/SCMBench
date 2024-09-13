@@ -27,19 +27,19 @@ Can ignore the `snakemake` for now.
 1. Data Preprocessing
 Follow [this](https://SCMBench.readthedocs.io/en/latest/preprocessing.html).
 
-2. Run GLUE:
+2. Run python scrips. E.g., scGLUE.\:
 ```bash
-python setup.py develop
-cd evaluation/workflow/scripts
-python run_GLUE.py --input-rna /home/co-zong1/rds/hpc-work/multiomics/Multiomics-benchmark/data/download/Chen-2019/Chen-2019-RNA.h5ad --input-atac  /home/co-zong1/rds/hpc-work/multiomics/Multiomics-benchmark/data/download/Chen-2019/Chen-2019-ATAC-preprocessed.h5ad -p /home/co-zong1/rds/hpc-work/multiomics/Multiomics-benchmark/data/download/Chen-2019/guidance.graphml.gz --train-dir ./glue-output --output-rna ./glue-output/rna.csv --output-atac ./glue-output/atac.csv --output-feature ./glue-output/features.csv -r glue-output/run_info.yaml
+cd run
+mkdir glue-output
+python run_GLUE.py --input-rna Chen-2019-RNA.h5ad --input-atac  Chen-2019-ATAC-preprocessed.h5ad -p guidance.graphml.gz --train-dir ./glue-output --output-rna ./glue-output/rna.csv --output-atac ./glue-output/atac.csv --output-feature ./glue-output/features.csv -r glue-output/run_info.yaml
 ```
 
 3. Run R script. E.g., Harmony.\
 Tested approach: install R and related packages with in conda (e.g. [this](https://stackoverflow.com/questions/70410968/is-it-possible-to-install-r-in-miniconda)).
 ```bash
-cd evaluation/workflow/scripts
+cd run
 mkdir harmony-output
-Rscript run_Harmony.R --input-rna /home/co-zong1/rds/hpc-work/multiomics/Multiomics-benchmark/data/download/Chen-2019/Chen-2019-RNA.h5ad --input-atac  /home/co-zong1/rds/hpc-work/multiomics/Multiomics-benchmark/data/download/Chen-2019/Chen-2019-ATAC-preprocessed.h5ad --output-rna ./harmony-output/rna.csv --output-atac ./harmony-output/atac.csv --run-info harmony-output/run_info.yaml
+Rscript run_Harmony.R --input-rna Chen-2019-RNA.h5ad --input-atac  Chen-2019-ATAC-preprocessed.h5ad --output-rna ./harmony-output/rna.csv --output-atac ./harmony-output/atac.csv --run-info harmony-output/run_info.yaml
 ```
 
 ## Data preprocessing
@@ -69,17 +69,20 @@ Current included datasets:
 
 ## Algorithms
 
-For newly added downstream tasks, follow the code fashion of `run_[METHOD].py` in [evaluation/workflow/scripts/](evaluation/workflow/scripts).
+For newly added downstream tasks, follow the code fashion of `run_[METHOD].py` in [run/scripts/](evaluation/workflow/scripts) and [run/shell/](run/shell/).
 
-Note: you can directly import new algorithms via `pip install` if they provide that option. But do remember to record the version and update `env.yaml`.
+Note: Most tools can be directly used by installing it individually via `pip install` if they provide that option. But for scJoint, scGPT, and UCE, we provide edited package in [methods/](methods/) used for their corresponding scripts `run_[METHOD].py`.
 
 Current included algorithms:
+
 Statistical-Based:
+
 Paired:
 - [bindSC](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-022-02679-x)
 - [MMD_MA](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8496402/)
 - [MOFA](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02015-1)
 - [UnionCom](https://academic.oup.com/bioinformatics/article/36/Supplement_1/i48/5870490)
+
 Unpaired:
 - [Seurat v5](https://www.nature.com/articles/s41587-023-01767-y)
 - [Seurat V4](https://www.cell.com/cell/fulltext/S0092-8674(21)00583-3)
@@ -89,11 +92,13 @@ Unpaired:
 - [scMoMaT](https://www.nature.com/articles/s41467-023-36066-2)
 
 Deep Learning-based:
+
 Paired:
 - [totalVI](https://www.nature.com/articles/s41592-020-01050-x)
 - [scMDC](https://www.nature.com/articles/s41467-022-35031-9)
 - [DeepMAPS](https://www.nature.com/articles/s41467-023-36559-0)
 - [SIMBA](https://www.nature.com/articles/s41592-023-01899-8)
+
 Unpaired:
 - [Cobolt](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02556-z)
 - [scVI](https://www.nature.com/articles/s41592-018-0229-2)
