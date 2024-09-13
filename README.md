@@ -114,7 +114,7 @@ Unpaired:
 
 ## Downstream tasks
 
-For newly added downstream tasks, follow the code fashion in [Experiments/](experiments).
+For downstream evaluation, please read [evaluation/README.md](evaluation/README.md) and follow the scripts in [evaluation/scripts](evaluation/scripts).
 
 Currently included downstream tasks:
 - Multi-Omic Integration Accuracy (MAP, MNI, ASW, ARI)
