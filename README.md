@@ -75,7 +75,7 @@ Note: Most tools can be directly used by installing it individually via `pip ins
 
 Current included algorithms:
 
-Statistical-Based:
+### Statistical-Based:
 
 Paired:
 - [bindSC](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-022-02679-x)
@@ -91,7 +91,7 @@ Unpaired:
 - [Pamona](https://academic.oup.com/bioinformatics/article/38/1/211/6353029)
 - [scMoMaT](https://www.nature.com/articles/s41467-023-36066-2)
 
-Deep Learning-based:
+### Deep Learning-based:
 
 Paired:
 - [totalVI](https://www.nature.com/articles/s41592-020-01050-x)
@@ -106,7 +106,7 @@ Unpaired:
 - [GLUE](https://www.nature.com/articles/s41587-022-01284-4)
 - [Harmony](https://www.nature.com/articles/s41592-019-0619-0)
 
-Foundation Models:
+### Foundation Models:
 - [Geneformer](https://www.nature.com/articles/s41586-023-06139-9)
 - [scFoundation](https://www.nature.com/articles/s41592-024-02305-7)
 - [scGPT](https://www.nature.com/articles/s41592-024-02201-0)
