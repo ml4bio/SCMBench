@@ -165,7 +165,7 @@ cython_debug/
 scFoundation/apiexample/data
 scFoundation/apiexample/demo
 
-/data/download
+*.h5ad
 /evaluation/scripts/trajectory_conservation_metrics_comb.py
 /evaluation/scripts/benchmark.R
 /evaluation/scripts/hyperparam.R
