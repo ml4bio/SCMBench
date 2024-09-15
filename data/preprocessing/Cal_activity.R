@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-source("./scATAC_source.r")
+source("../../SCMBench/scATAC_source.r")
 Sys.setenv(RETICULATE_PYTHON = "/mnt/nas/user/yixuan/miniconda3/envs/R4+torgeo/bin/python")
 use_python("/mnt/nas/user/yixuan/miniconda3/envs/R4+torgeo/bin/python")
 py_config()

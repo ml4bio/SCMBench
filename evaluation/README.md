@@ -14,8 +14,8 @@ Output:
 - Adjusted Rand Index (ARI)
 
 ### Bio-Conservation
-Run [/scripts/graphs/biomarker_paired.py](/scripts/graphs/biomarker_paired.py) for paired datasets.\
-Run [/scripts/graphs/biomarker_unpaired.py](/scripts/graphs/biomarker_unpaired.py) for unpaired datasets.\
+Run [/scripts/biomarker_paired.py](/scripts/graphs/biomarker_paired.py) for paired datasets.\
+Run [/scripts/biomarker_unpaired.py](/scripts/graphs/biomarker_unpaired.py) for unpaired datasets.\
 Run [/scripts/trajectory_conservation_metrics](/scripts/trajectory_convervation_metrics.py) for trajectory conservation.
 
 Output:
