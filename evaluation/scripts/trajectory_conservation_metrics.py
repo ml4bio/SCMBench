@@ -41,8 +41,6 @@ def parse_args() -> argparse.Namespace:
 
 
 
-#datasets = [anndata.read_h5ad(item) for item in args.datasets]
-#latents = [pd.read_csv(item, header=None, index_col=0).to_numpy() for item in args.latents]
 def main(args: argparse.Namespace):
     rna=ad.read_h5ad(args.datasets[0])
     #print(args.root)
@@ -91,8 +89,6 @@ def main(args: argparse.Namespace):
         yaml.dump(metrics, f)
     
     
-    #print(score)
-
 
 if __name__ == "__main__":
     main(parse_args())
