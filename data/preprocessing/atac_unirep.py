@@ -7,6 +7,14 @@ import argparse
 import pathlib
 
 import anndata
+import sys
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+scmbench_dir = os.path.abspath(os.path.join(parent_dir,'..'))
+print('scmbench_dir',scmbench_dir)
+sys.path.append(scmbench_dir)
 import SCMBench
 
 
