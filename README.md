@@ -1,9 +1,5 @@
 # Dev Code for Multiomics Benchmark
 
-Code adapted from [GLUE](https://github.com/gao-lab/GLUE). Major refactoring needed!
-
-Some usage details can also be found in their [docs](https://scglue.readthedocs.io)
-
 
 
 ## Directory structure
@@ -21,25 +17,23 @@ Some usage details can also be found in their [docs](https://scglue.readthedocs.
 └── README.md
 ```
 
-Can ignore the `snakemake` for now.
-
 ## Quick start
 1. Data Preprocessing
-Follow [this](https://SCMBench.readthedocs.io/en/latest/preprocessing.html).
+Follow [this](/data/README.md).
 
-2. Run python scrips. E.g., scGLUE.\:
+2. Run python scrips. E.g., scJoint.\:
 ```bash
 cd run
-mkdir glue-output
-python run_GLUE.py --input-rna Chen-2019-RNA.h5ad --input-atac  Chen-2019-ATAC-preprocessed.h5ad -p guidance.graphml.gz --train-dir ./glue-output --output-rna ./glue-output/rna.csv --output-atac ./glue-output/atac.csv --output-feature ./glue-output/features.csv -r glue-output/run_info.yaml
+mkdir ../results/scJoint-output
+python run_scJoint.py --input-rna ../data/download/10x-Multiome-Pbmc10k-small-RNA.h5ad --input-atac  10x-Multiome-Pbmc10k-small-ATAC.h5ad  --output-rna ../results/scJoint-output/rna.csv --output-atac ../results/scJoint-output/atac.csv  -r ../results/scJoint-output/run_info.yaml
 ```
 
-3. Run R script. E.g., Harmony.\
+3. Run R script. E.g., Deepmaps.\
 Tested approach: install R and related packages with in conda (e.g. [this](https://stackoverflow.com/questions/70410968/is-it-possible-to-install-r-in-miniconda)).
 ```bash
 cd run
-mkdir harmony-output
-Rscript run_Harmony.R --input-rna Chen-2019-RNA.h5ad --input-atac  Chen-2019-ATAC-preprocessed.h5ad --output-rna ./harmony-output/rna.csv --output-atac ./harmony-output/atac.csv --run-info harmony-output/run_info.yaml
+mkdir ../results/Deepmaps-output
+Rscript run_Deepmaps.R --input-rna ../data/download/10x-Multiome-Pbmc10k-small-RNA.h5ad --input-atac  10x-Multiome-Pbmc10k-small-ATAC.h5ad  --output-rna ../results/Deepmaps-output/rna.csv --output-atac ../results/Deepmaps-output/atac.csv  -r ../results/Deepmaps-output/run_info.yaml
 ```
 
 ## Data preprocessing
@@ -49,27 +43,15 @@ Preprocess all the data to the same `.h5ad` format with the same keys following 
 For new datasets we include, upload preprocessing scripts and update the preprocessed data/link [here](data/README.md) (store the preprocessed data somewhere we can directly download).
 
 Current included datasets:
-- ├─ 10x-ATAC-Brain5k\
-  ├─ 10x-Multiome-Pbmc10k\
-  ├─ Cao-2020\
+- ├─ 10x-Multiome-Pbmc10k\
   ├─ Chen-2019\
-  ├─ Domcke-2020\
-  ├─ Luo-2017\
   ├─ Ma-2020\
-  └─ Saunders-2018
-- eqtl\
-  └─ GTEx-v8
-- hic\
-  └─ Javierre-2016
-- chip\
-  └─ ENCODE\
-     └─ TF-human
-- database\
-   └─ TRRUST-v2
+  ├─ Muto-2021\
+  └─ Yao-2021
 
 ## Algorithms
 
-For newly added downstream tasks, follow the code fashion of `run_[METHOD].py` in [run/scripts/](evaluation/workflow/scripts) and [run/shell/](run/shell/).
+For newly added downstream tasks, follow the code fashion of `run_[METHOD].py` in [run/](run/) and [run/shell/](run/shell/).
 
 Note: Most tools can be directly used by installing it individually via `pip install` if they provide that option. But for scJoint, scGPT, and UCE, we provide edited package in [methods/](methods/) used for their corresponding scripts `run_[METHOD].py`.
 
