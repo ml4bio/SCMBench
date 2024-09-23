@@ -174,3 +174,6 @@ scFoundation/apiexample/demo
 /evaluation/scripts/subsample.R
 /evaluation/scripts/prior_alt.R
 /evaluation/scripts/prior_corrupt.R
+
+/results
+/tutorials/analysis/
