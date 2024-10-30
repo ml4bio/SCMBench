@@ -1,4 +1,4 @@
-# Dev Code for Multiomics Benchmark
+# SCMBench: Benchmarking Domain-specific and Foundation Models for Single-cell Multi-omics Data Integration
 
 
 
