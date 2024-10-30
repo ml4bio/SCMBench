@@ -131,11 +131,11 @@ def main(args: argparse.Namespace) -> None:
     rna_emb = rna_emb.values
     both=np.concatenate([rna_emb,atac_emb],axis=1)
 
-    adata.obsm['X_scGPT'] = both
+    adata.obsm['X_FM'] = both
 
     print("[4/5] Training scVI...")
     PreSCVI.setup_anndata(adata)
-    vae = PreSCVI(adata, input_key="X_scGPT", n_layers=args.n_layers, n_latent=args.n_latent, gene_likelihood="nb")
+    vae = PreSCVI(adata, input_key="X_FM", n_layers=args.n_layers, n_latent=args.n_latent, gene_likelihood="nb")
     vae.train()
 
     adata.obsm["X_scVI"] = vae.get_latent_representation()
