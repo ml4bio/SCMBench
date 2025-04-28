@@ -1,0 +1,9 @@
+adjusted_rand_index: 0.3289
+avg_silhouette_width: 0.5712
+avg_silhouette_width_batch: 0.9889
+foscttm: null
+graph_connectivity: 0.8676
+mean_average_precision: 0.7242
+neighbor_conservation: 0.131
+normalized_mutual_info: 0.6977
+seurat_alignment_score: 1.0
