@@ -79,7 +79,7 @@ import os
 script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 import sys
-sys.path.append('../methods/')
+sys.path.append('../methods/source_code')
 import argparse
 from UCE_utils.evaluate import AnndataProcessor
 from accelerate import Accelerator
@@ -166,9 +166,13 @@ if __name__ == "__main__":
     args.dir = args.output_dir
     os.makedirs(args.dir,exist_ok=True)
     print("[1/2] Reading data...")
-    print(args.output_dir + "{}_embeds_uce.npy".format(args.adata_path.split('/')[-1].split('.')[0]))
+    print(args.output_dir + "{}_embedings.csv".format(args.adata_path.split('/')[-1].split('.')[0].split('-')[-1].lower()))
 
     print("[2/2] Encoding...")
     accelerator = Accelerator(project_dir=args.dir)
     main(args, accelerator)
     print("Finish")
+
+with tarfile.open(save_path) as tar:
+    tar.extractall(path=os.path.dirname(save_path))
+    print("Done!")

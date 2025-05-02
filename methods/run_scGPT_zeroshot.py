@@ -5,10 +5,11 @@ import sys
 import warnings
 import argparse
 import pathlib
+from pathlib import Path
+import os 
 
 import scanpy as sc
 import pandas as pd
-import sys
 
 sys.path.insert(0, "../")
 
@@ -65,6 +66,7 @@ def main(args: argparse.Namespace) -> None:
 
     print("[3/3] Saving embeddings...")
     emb=pd.DataFrame(embed_adata.obsm['X_scGPT'],index=adata.obs_names)
+    os.makedirs(args.output_path.parent,exist_ok=True)
     emb.to_csv(args.output_path,header=False)
 
 if __name__ == "__main__":

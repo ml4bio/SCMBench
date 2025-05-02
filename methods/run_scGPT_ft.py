@@ -30,15 +30,23 @@ import pandas as pd
 import scipy.sparse as sp
 from sklearn import preprocessing
 
-sys.path.append('../methods/')
-from scgpt_model import prepare_data, prepare_dataloader, define_wandb_metrcis, evaluate, train, eval_testdata_save_embed
-from scgpt_model.tokenizer import tokenize_and_pad_batch
-from scgpt_model.model import MultiOmicTransformerModel
-import scgpt_model as scg
-from scgpt_model.tokenizer.gene_tokenizer import GeneVocab
-from scgpt_model.loss import masked_mse_loss
-from scgpt_model.preprocess import Preprocessor
-from scgpt_model.utils import set_seed
+sys.path.append('../methods/source_code/')
+sys.path.insert(0, "../")
+from scgpt import prepare_data, prepare_dataloader, define_wandb_metrcis, evaluate, eval_testdata, train
+from scgpt.tokenizer import tokenize_and_pad_batch
+from scgpt.model import MultiOmicTransformerModel
+
+import scgpt as scg
+from scgpt.tokenizer.gene_tokenizer import GeneVocab
+from scgpt.tokenizer import random_mask_value
+from scgpt.loss import (
+    masked_mse_loss,
+    masked_relative_error,
+    criterion_neg_log_bernoulli,
+)
+from scgpt.preprocess import Preprocessor
+from scgpt.utils import set_seed, category_str2int, eval_scib_metrics
+from scgpt_model import eval_testdata_save_embed
 import argparse
 
 def parse_args() -> argparse.Namespace:
@@ -66,7 +74,14 @@ def parse_args() -> argparse.Namespace:
         "--pretrain", dest="pretrain", type=bool, default=False, 
         help="if with (True) or without (False) pretrained transformer"
     )
-
+    parser.add_argument(
+        "--load_layers", dest="load_layers", type=int, default=0, 
+        help="number of transformer layers loaded to finetune"
+    )
+    parser.add_argument(
+        "--nlayers", dest="nlayers", type=int, default=4, 
+        help="number of transformer layers to initialize"
+    )
     return parser.parse_args()
 
 def main(args: argparse.Namespace) -> None:
@@ -84,7 +99,9 @@ def main(args: argparse.Namespace) -> None:
         dataset_name='SCMBench', # Dataset name "BMMC"
         do_train=True, # Flag to indicate whether to do update model parameters during training
         load_model=args.model_path, # Path to pre-trained model
-        freeze = True, #freeze
+        # freeze = True, #freeze
+        # freeze = False,
+        load_layers = args.load_layers,
         GEP=True, # Gene expression modelling
         GEPC=True, # Gene expression modelling for cell objective
         CLS=False,
@@ -98,7 +115,7 @@ def main(args: argparse.Namespace) -> None:
         use_batch_labels = True,
         use_mod = True,
         per_seq_batch_sample = False,
-        epochs=10, # Default number of epochs for fine-tuning #25
+        epochs=25, # Default number of epochs for fine-tuning
         input_layer_key = "X_binned", # Default expression value binning in data pre-processing
         n_bins=51, # Default number of bins for value binning in data pre-processing
         n_hvg = 1200,  # Default number of highly variable genes
@@ -107,13 +124,13 @@ def main(args: argparse.Namespace) -> None:
         lr=1e-3, # Default learning rate for fine-tuning
         batch_size=16, # Default batch size for fine-tuning
         layer_size=512,
-        nlayers=4,
+        nlayers=args.nlayers,
         nhead=8, # if load model, batch_size, layer_size, nlayers, nhead will be ignored
         dropout=0.2, # Default dropout rate during model fine-tuning
         schedule_ratio=0.95,  # Default rate for learning rate decay
         save_eval_interval=5, # Default model evaluation interval
         log_interval=100, # Default log interval
-        fast_transformer=True, # Default setting
+        fast_transformer=False, # Default setting
         pre_norm=False, # Default setting
         amp=True,  # Default setting: Automatic Mixed Precision
         pad_token = "<pad>",
@@ -127,6 +144,7 @@ def main(args: argparse.Namespace) -> None:
         project="scGPT",
         reinit=True,
         settings=wandb.Settings(start_method="fork"),
+        mode="offline"
     )
     config = wandb.config
     print(config)
@@ -156,7 +174,7 @@ def main(args: argparse.Namespace) -> None:
         encoded_batch = le.fit_transform(adata.obs['domain'].values)
         adata.obs["batch_id"] =  encoded_batch
         adata.obs["str_batch"] = adata.obs["batch_id"].astype('category')
-        data_is_raw = False
+        data_is_raw = True
         print('#')
 
     if dataset_name == 'SCMBench-simi':
@@ -168,7 +186,7 @@ def main(args: argparse.Namespace) -> None:
         encoded_batch = le.fit_transform(adata.obs['batch'].values)
         adata.obs["batch_id"] =  encoded_batch
         adata.obs["str_batch"] = adata.obs["batch_id"].astype('category')
-        data_is_raw = False
+        data_is_raw = True
         print('#')
 
     if dataset_name == 'BMMC':
@@ -241,7 +259,7 @@ def main(args: argparse.Namespace) -> None:
         filter_cell_by_counts=False,  # step 2
         normalize_total=False,  # 3. whether to normalize the raw data and to what sum
         result_normed_key="X_normed",  # the key in adata.layers to store the normalized data
-        log1p=False,  # 4. whether to log1p the normalized data
+        log1p=data_is_raw,  # 4. whether to log1p the normalized data
         result_log1p_key="X_log1p",
         subset_hvg=False,  # 5. whether to subset the raw data to highly variable genes
         hvg_flavor=None,
@@ -388,7 +406,7 @@ def main(args: argparse.Namespace) -> None:
         n_input_bins=config.n_bins,
         ecs_threshold=config.ecs_thres,
         explicit_zero_prob=config.explicit_zero_prob,
-        use_fast_transformer=False,
+        use_fast_transformer=config.fast_transformer,
         pre_norm=config.pre_norm,
         use_mod=config.use_mod,
         ntokens_mod=ntokens_mod if config.use_mod else None,
@@ -400,14 +418,17 @@ def main(args: argparse.Namespace) -> None:
         model.encoder.embedding.weight.data[:len(pretrained_genes), :] = pretrained_emb_weights
         model.encoder.enc_norm.weight.data = model_dict['encoder.enc_norm.weight']
 
+        if config.load_layers > 0:
+            keep_keys = ['value_encoder'] + [f'transformer_encoder.layers.{i}' for i in range(config.load_layers)]
+        else:
+            keep_keys = []
+
         if args.pretrain:
             model_state_dict = model.state_dict()
             pretrained_state_dict = {}
             for key, value in model_dict.items():
                 if key in model_state_dict:
-                    if key.startswith('value_encoder') or key.startswith('transformer_encoder.layers.0') or \
-                    key.startswith('transformer_encoder.layers.1') or key.startswith('transformer_encoder.layers.2') or \
-                    key.startswith('transformer_encoder.layers.3'):
+                    if key in keep_keys:
                         pretrained_state_dict[key] = value
 
             model_state_dict.update(pretrained_state_dict)
