@@ -9,13 +9,32 @@
 ├── SCMBench                # Main Python package
 ├── data                    # Data files
 ├── evaluation              # Method evaluation pipelines
-├── methods                 # Packages of several tools
-├── run                     # Scripts for running tools
-├── env.yaml                # Reproducible Python environment via conda
+├── methods                 # Tools included in the benchmarking
+├── environments            # Reproducible Python or R environment
 ├── pyproject.toml          # Python package metadata
 ├── LICENSE
 └── README.md
 ```
+
+## Installation
+
+### 1. Clone our repository
+
+```
+git clone https://github.com/Susanxuan/SCMBench.git
+```
+
+### 2. Set up for each method
+
+- We have summarized Python/R version and packages needed for each method, users can `bash [env]_installation.sh` files to install requirements for each method accordingly.
+
+| Virtual Envs         | Python/R Version | Methods                                                                             |
+| -------------------- | ---------------- | ----------------------------------------------------------------------------------- |
+| env1_installation.sh | python=3.8       | cobolt;GLUE;Harmony;MMD-MA;MOFA;Pamona;PCA;<br />scJoint;scMDC;scMoMaT;UCE;UnionCom |
+| env2_installation.sh | python=3.11      | Geneformer;scFoundation;scVI;TotalVI                                                |
+| env3_installation.sh | python=3.10      | scGPT                                                                               |
+| env4_installation.sh | R=4.3.3          | bindSC;Deepmaps;iNMF;liger;Seurat4;Seurat5   
+
 
 ## Quick start
 1. Data Preprocessing
@@ -23,7 +42,7 @@ Follow [this](/data/README.md).
 
 2. Run python scrips. E.g., scJoint.\:
 ```bash
-cd run
+cd methods/scJoint
 mkdir ../results/scJoint-output
 python run_scJoint.py --input-rna ../data/download/10x-Multiome-Pbmc10k-small-RNA.h5ad --input-atac  10x-Multiome-Pbmc10k-small-ATAC.h5ad  --output-rna ../results/scJoint-output/rna.csv --output-atac ../results/scJoint-output/atac.csv  -r ../results/scJoint-output/run_info.yaml
 ```
@@ -31,7 +50,7 @@ python run_scJoint.py --input-rna ../data/download/10x-Multiome-Pbmc10k-small-RN
 3. Run R script. E.g., Deepmaps.\
 Tested approach: install R and related packages with in conda (e.g. [this](https://stackoverflow.com/questions/70410968/is-it-possible-to-install-r-in-miniconda)).
 ```bash
-cd run
+cd methods/Deepmaps
 mkdir ../results/Deepmaps-output
 Rscript run_Deepmaps.R --input-rna ../data/download/10x-Multiome-Pbmc10k-small-RNA.h5ad --input-atac  10x-Multiome-Pbmc10k-small-ATAC.h5ad  --output-rna ../results/Deepmaps-output/rna.csv --output-atac ../results/Deepmaps-output/atac.csv  -r ../results/Deepmaps-output/run_info.yaml
 ```
@@ -47,13 +66,13 @@ Current included datasets:
   ├─ Chen-2019\
   ├─ Ma-2020\
   ├─ Muto-2021\
-  └─ Yao-2021
+  ├─ Yao-2021
+  └─ Triple\
+
 
 ## Algorithms
 
-For newly added downstream tasks, follow the code fashion of `run_[METHOD].py` in [run/](run/) and [run/shell/](run/shell/).
-
-Note: Most tools can be directly used by installing it individually via `pip install` if they provide that option. But for scJoint, scGPT, and UCE, we provide edited package in [methods/](methods/) used for their corresponding scripts `run_[METHOD].py`.
+Note: Most tools can be directly used by installing it individually via `pip install` if they provide that option. But for scJoint, and UCE, we provide edited package in [methods/](methods/) used for their corresponding scripts `run_[METHOD].py`.
 
 Current included algorithms:
 
@@ -72,6 +91,7 @@ Unpaired:
 - [LIGER](https://www.cell.com/cell/pdf/S0092-8674(19)30504-5.pdf)
 - [Pamona](https://academic.oup.com/bioinformatics/article/38/1/211/6353029)
 - [scMoMaT](https://www.nature.com/articles/s41467-023-36066-2)
+- [Harmony](https://www.nature.com/articles/s41592-019-0619-0)
 
 ### Deep Learning-based:
 
@@ -96,12 +116,14 @@ Unpaired:
 
 ## Downstream tasks
 
-For downstream evaluation, please read [evaluation/README.md](evaluation/README.md) and follow the scripts in [evaluation/scripts](evaluation/scripts).
+For downstream evaluation, please read [evaluation/README.md](evaluation/README.md).
 
 Currently included downstream tasks:
 - Multi-Omic Integration Accuracy (MAP, MNI, ASW, ARI)
 - Bio-Conservation: 
   - Biomarker Detection (JSI)
+  - DARs Detection (JSI)
+  - Enriched Motifs Detection (JSI)
   - Trajectory Conservation
 - Batch effect & detecting over-correction (iLISI, kBET, Graph connectivity, Batch-ASW)
 
