@@ -1,0 +1,33 @@
+CUDA_VISIBLE_DEVICES=1 python main.py \
+    --method lasso \
+    --data_dir /mnt/nas/user/yixuan/Bio_clock/cxg-clocks-v2/blood \
+    --celltype effector_memory_CD8-positive_alpha-beta_T_cell \
+    --output_dir ./outputs/lasso \
+    --checkpoint_dir ./checkpoints/lasso \
+    --batch_size 24 \
+    --num_workers 1 \
+    --lr2 0.001 \
+    --epochs2 20 \
+    --n_alphas 100 \
+    --cv_folds 5 \
+    --weight_decay 0.01 \
+    --mae_weight 0.7 \
+    --mse_weight 0.3 \
+    --seed 42
+
+CUDA_VISIBLE_DEVICES=0 python main.py \
+    --method mlp \
+    --data_dir /mnt/nas/user/yixuan/Bio_clock/cxg-clocks-v2/blood \
+    --celltype effector_memory_CD8-positive_alpha-beta_T_cell \
+    --output_dir ./outputs/mlp \
+    --checkpoint_dir ./checkpoints/mlp \
+    --batch_size 24 \
+    --num_workers  1\
+    --lr2 0.001 \
+    --epochs2 20 \
+    --hidden_dims 128 64 \
+    --dropout 0.2 \
+    --weight_decay 0.02 \
+    --mae_weight 0.7 \
+    --mse_weight 0.3 \
+    --seed 42
