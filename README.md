@@ -26,7 +26,7 @@ git clone https://github.com/Susanxuan/SCMBench.git
 
 ### 2. Set up for each method
 
-- We have summarized Python/R version and packages needed for each method, users can `bash [env]_installation.sh` files to install requirements for each method accordingly.
+- We have summarized Python/R version and packages needed for each method in [environments](environments), users can `bash [env]_installation.sh` files to install requirements for each method accordingly.
 
 | Virtual Envs         | Python/R Version | Methods                                                                             |
 | -------------------- | ---------------- | ----------------------------------------------------------------------------------- |
