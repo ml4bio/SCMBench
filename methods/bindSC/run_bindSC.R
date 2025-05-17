@@ -40,6 +40,10 @@ parse_args <- function() {
         "--run-info", dest = "run_info", type = "character", required = TRUE,
         help = "Path of output run info file (.yaml)"
     )
+    parser$add_argument(
+        "--device", dest="device", type="character", default='cpu',
+        help="cuda or cpu"
+    )
     return(parser$parse_args())
 }
 

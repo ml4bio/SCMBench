@@ -19,9 +19,6 @@ import yaml
 import numpy as np
 import torch
 
-# sys.path.append("../methods/")
-# sys.path.append("../methods/scJoint")
-
 from scJoint.config import Config
 from scJoint.process_db import label_parsing
 from scJoint.trainingprocess_stage1 import TrainingProcessStage1

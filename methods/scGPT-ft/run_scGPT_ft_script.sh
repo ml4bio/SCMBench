@@ -1,14 +1,3 @@
-#!/bin/bash
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:1 # change this the number of GPUs needed
-#SBATCH --cpus-per-task=16 # don't change this
-#SBATCH --output /ailab/user/chenpengan/liuxinyuan/new_liuxinyuan/scmbench/evaluation/log.txt
-#SBATCH -p optimal
-#SBATCH -A optimal 
-# nvidia-smi
-
-module load anaconda/2022.10
-source activate gpt
 
 data_name=10x-Multiome-Pbmc10k-small
 

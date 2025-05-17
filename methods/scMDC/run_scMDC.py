@@ -15,6 +15,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 
+sys.path.append('scMDC/src')
 from scMDC import scMultiCluster
 import numpy as np
 import pandas as pd
@@ -180,7 +181,7 @@ def main(args: argparse.Namespace) -> None:
        print("n_cluster is defined as " + str(args.n_clusters))
        n_clusters = args.n_clusters
 
-    y_pred, _, _, _, _ = model.fit(X1=adata1.X, X_raw1=adata1.raw.X, sf1=adata1.obs.size_factors, 
+    y_pred, _ = model.fit(X1=adata1.X, X_raw1=adata1.raw.X, sf1=adata1.obs.size_factors, 
         X2=adata2.X, X_raw2=adata2.raw.X, sf2=adata2.obs.size_factors, y=y,
         n_clusters=n_clusters, batch_size=args.batch_size, num_epochs=args.maxiter, 
         update_interval=args.update_interval, tol=args.tol, lr=args.lr, save_dir=args.save_dir)

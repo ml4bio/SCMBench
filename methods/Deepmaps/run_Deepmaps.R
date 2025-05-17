@@ -1,20 +1,8 @@
 #!/usr/bin/env Rscript
 
-source("/mnt/nas/user/yixuan/deepmaps-master/scRNA_scATAC1.r")
-Sys.setenv(RETICULATE_PYTHON = "/mnt/nas/user/yixuan/miniconda3/envs/R4+torgeo/bin/python")
-use_python("/mnt/nas/user/yixuan/miniconda3/envs/R4+torgeo/bin/python")
-py_config()
 library(argparse)
 library(Seurat)
 library(yaml)
-# library(anndata)
-#suppressPackageStartupMessages({
-#    source(".Rprofile")
-#    library(argparse)
-#    library(Seurat)
-#    library(harmony)
-#    library(yaml)
-#})
 
 
 parse_args <- function() {

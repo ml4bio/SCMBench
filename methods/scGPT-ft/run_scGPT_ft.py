@@ -29,6 +29,8 @@ from torchtext._torchtext import (
 import pandas as pd
 import scipy.sparse as sp
 from sklearn import preprocessing
+import yaml 
+import time
 
 sys.path.append('../methods/source_code/')
 sys.path.insert(0, "../")
@@ -205,6 +207,7 @@ def main(args: argparse.Namespace) -> None:
         data_is_raw = False
 
     print("[3/6] Preprocessing...")
+    start_time = time.time()
     if config.use_mod:
         gene_rna_df = pd.DataFrame(index = adata.var.index.tolist())
         gene_rna_df['mod'] = 'RNA'
@@ -567,6 +570,14 @@ def main(args: argparse.Namespace) -> None:
         scheduler.step()
 
     print("[6/6] Saving best model and results...")
+    elapsed_time = time.time() - start_time
+    with open(save_dir / 'run_info.yaml','w') as f:
+        yaml.dump({
+            "cmd": " ".join(sys.argv),
+            "args": vars(args),
+            "time": elapsed_time,
+            "n_cells": adata.shape[0]
+        }, f)
     torch.save(best_model.state_dict(), save_dir / "best_model.pt")
 
 if __name__ == "__main__":

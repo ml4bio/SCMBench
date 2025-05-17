@@ -15,7 +15,6 @@ import pandas as pd
 import scipy.sparse
 import yaml
 
-sys.path.append("../../../custom")
 import cobolt
 from cobolt.utils import SingleData, MultiomicDataset
 from cobolt.model import Cobolt

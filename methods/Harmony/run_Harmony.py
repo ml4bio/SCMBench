@@ -14,15 +14,6 @@ import random
 import sys
 import time
 
-
-# args = argparse.Namespace(
-#     input_rna = '/ailab/user/chenpengan/zgy/DualOmics/Dual_datasets/Muto-2021-small/Muto-2021-small-RNA.h5ad',
-#     input_atac = '/ailab/user/chenpengan/zgy/DualOmics/Dual_datasets/Muto-2021-small/Muto-2021-small-ACTIVE.h5ad',
-#     random_seed = 666,
-#     output_rna = "/ailab/user/chenpengan/zgy/DualOmics/harmony/Muto-2021-small-RNA_latent.csv",
-#     output_atac = "/ailab/user/chenpengan/zgy/DualOmics/harmony/Muto-2021-small-ACTIVE_latent.csv"
-# )
-
 def parse_args() -> argparse.Namespace:
     r"""
     Parse command line arguments

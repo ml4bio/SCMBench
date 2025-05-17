@@ -1,7 +1,4 @@
 #!/bin/bash
-#SBATCH --gpus=1
-module load anaconda/2022.10
-source activate scgpt
 
 dataset_name=10x-Multiome-Pbmc10k-small
 for lr in 0.001 0.01 0.005; do

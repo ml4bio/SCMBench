@@ -24,8 +24,6 @@ from SCMBench.utils import AUTO
 
 import scmomat 
 
-sys.path.append("../custom")
-
 def parse_args() -> argparse.Namespace:
     r"""
     Parse command line arguments
@@ -133,7 +131,7 @@ def main(args: argparse.Namespace) -> None:
     feature_latent_save = np.squeeze(feature_latent.copy())
     n_neighbors = 100
     r = None
-    s_pair_dist, knn_indices, knn_dists = scmomat.post_process(feature_latent, n_neighbors, njobs = 8, r = r)
+    knn_indices, knn_dists = scmomat.calc_post_graph(feature_latent, n_neighbors, njobs = 8, r = r)
     resolution = 0.9
     labels_leiden = scmomat.leiden_cluster(X = None, knn_indices = knn_indices, knn_dists = knn_dists, resolution = resolution)
 

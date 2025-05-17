@@ -171,7 +171,3 @@ if __name__ == "__main__":
     accelerator = Accelerator(project_dir=args.dir)
     main(args, accelerator)
     print("Finish")
-
-with tarfile.open(save_path) as tar:
-    tar.extractall(path=os.path.dirname(save_path))
-    print("Done!")
