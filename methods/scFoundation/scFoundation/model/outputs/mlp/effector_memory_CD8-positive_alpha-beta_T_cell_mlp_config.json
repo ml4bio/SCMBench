@@ -1,0 +1,24 @@
+{
+    "data_dir": "/mnt/nas/user/yixuan/Bio_clock/cxg-clocks-v2/blood",
+    "celltype": "effector_memory_CD8-positive_alpha-beta_T_cell",
+    "output_dir": "./outputs/mlp",
+    "method": "mlp",
+    "seed": 42,
+    "batch_size": 24,
+    "num_workers": 1,
+    "checkpoint_dir": "./checkpoints/mlp",
+    "model_path": "./models/models.ckpt",
+    "resume": null,
+    "lr2": 0.001,
+    "epochs2": 20,
+    "weight_decay": 0.02,
+    "mae_weight": 0.7,
+    "mse_weight": 0.3,
+    "hidden_dims": [
+        128,
+        64
+    ],
+    "dropout": 0.2,
+    "lr_stage1": 0.001,
+    "lr_stage2": 0.0001
+}

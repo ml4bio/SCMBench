@@ -1,0 +1,47 @@
+{
+  "os": "Linux-4.15.0-197-generic-x86_64-with-glibc2.27",
+  "architecture": "x86_64",
+  "processor": "x86_64",
+  "cpu_count_physical": 32,
+  "cpu_count_logical": 64,
+  "ram_total_gb": 251.37,
+  "gpu_available": true,
+  "gpu_count": 3,
+  "active_gpu_index": 0,
+  "gpus": [
+    {
+      "index": 0,
+      "model": "NVIDIA GeForce RTX 3090",
+      "mem_gb": 24,
+      "compute_cap": "8.6"
+    },
+    {
+      "index": 1,
+      "model": "NVIDIA GeForce RTX 3090",
+      "mem_gb": 24,
+      "compute_cap": "8.6"
+    },
+    {
+      "index": 2,
+      "model": "Quadro P400",
+      "mem_gb": 2,
+      "compute_cap": "6.1"
+    }
+  ],
+  "python_version": "3.11.11",
+  "pytorch_version": "2.1.0+cu118",
+  "cuda_version": "11.8",
+  "cpu_model": "Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz",
+  "gpu_active_mem_gb": 24,
+  "function": "scFoundation_gpu",
+  "wall_time_min": 13.984297422568003,
+  "cpu_time_min": 14.148911671266667,
+  "initial_ram_mb": 2107.0390625,
+  "final_ram_mb": 6141.16015625,
+  "ram_diff_mb": 4034.12109375,
+  "peak_ram_mb": 6793.4140625,
+  "gpu_enabled": true,
+  "final_gpu_memory_mb": 479.97119140625,
+  "peak_gpu_memory_mb": 3220.599609375,
+  "gpu_memory_diff_mb": 479.97119140625
+}

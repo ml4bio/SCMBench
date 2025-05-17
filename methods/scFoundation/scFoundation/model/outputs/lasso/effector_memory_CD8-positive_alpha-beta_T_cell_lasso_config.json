@@ -1,0 +1,21 @@
+{
+    "data_dir": "/mnt/nas/user/yixuan/Bio_clock/cxg-clocks-v2/blood",
+    "celltype": "effector_memory_CD8-positive_alpha-beta_T_cell",
+    "output_dir": "./outputs/lasso",
+    "method": "lasso",
+    "seed": 42,
+    "batch_size": 24,
+    "num_workers": 1,
+    "checkpoint_dir": "./checkpoints/lasso",
+    "model_path": "./models/models.ckpt",
+    "resume": null,
+    "lr2": 0.001,
+    "epochs2": 20,
+    "weight_decay": 0.01,
+    "mae_weight": 0.7,
+    "mse_weight": 0.3,
+    "n_alphas": 100,
+    "cv_folds": 5,
+    "min_alpha": 0.0001,
+    "max_alpha": 100.0
+}
