@@ -1,4 +1,6 @@
-# SCMBench: Benchmarking Domain-specific and Foundation Models for Single-cell Multi-omics Data Integration
+# SCMBench
+
+This repository contains code for the paper **SCMBench: Benchmarking Domain-specific and Foundation Models for Single-cell Multi-omics Data Integration**.
 
 
 
@@ -131,3 +133,6 @@ Currently included downstream tasks:
 
 - Bedtools. `NotImplementedError: "intersectBed" does not appear to be installed or on the path, so this method is disabled.`. Download bedtools binary from official website from [here](https://bedtools.readthedocs.io/en/latest/content/installation.html#downloading-a-pre-compiled-binary) and put it in the conda bin directory. 
 - GPU support for torchbiggraph. Check [this](https://github.com/facebookresearch/PyTorch-BigGraph#installation).
+
+## Online Version - SCMBench server
+The online server of this package is underdevelopment, which will be freely available without any registration requirement.
